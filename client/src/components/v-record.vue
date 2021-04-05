@@ -1,12 +1,18 @@
 <template>
-  <div class="v-card" @click="changeRecord">
+  <div class="v-card">
     <b-card
       :title="record.title"
       tag="article"
-      :header="'#' + record.id"
+      header-tag="header"
       class="mb-2 cursor-pointer"
     >
-      <b-card-text>
+      <template v-slot:header>
+        <div class="d-flex justify-content-between" @click="changeRecord">
+          {{ "#" + record.id }}
+          <img src="../assets/img/edit-icon.svg" alt="" />
+        </div>
+      </template>
+      <b-card-text class="text-center">
         {{ record.text }}
       </b-card-text>
     </b-card>
@@ -50,5 +56,8 @@ export default Vue.extend({
 .v-card {
   // margin: 20px auto;
   width: 256px;
+  h4 {
+    text-align: center;
+  }
 }
 </style>
