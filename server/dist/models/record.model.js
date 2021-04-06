@@ -34,7 +34,7 @@ var RecordModel = /** @class */ (function () {
             connectMongoose();
             return Record.find({})
                 .then(function (docs) {
-                console.log("docs", docs);
+                // console.log("docs", docs);
                 mongoose_1["default"].disconnect();
                 return docs;
             })["catch"](function (e) {

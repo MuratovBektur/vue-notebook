@@ -3,13 +3,13 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-import record from './record';
+import record from "./record";
 
 export default new Vuex.Store({
   state: {},
   mutations: {},
   actions: {},
   modules: {
-    record
+    record,
   },
 });
