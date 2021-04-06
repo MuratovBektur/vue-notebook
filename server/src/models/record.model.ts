@@ -37,7 +37,7 @@ class RecordModel {
       connectMongoose();
       return Record.find({})
         .then((docs) => {
-          console.log("docs", docs);
+          // console.log("docs", docs);
           mongoose.disconnect();
           return docs;
         })
@@ -50,11 +50,11 @@ class RecordModel {
   }
   removeById() {
     try {
-      Record.deleteMany({ title: "title2" }, function (err, docs) {
-        if (err) return console.log(err);
+      // Record.deleteMany({ title: "title2" }, function (err, docs) {
+      //   if (err) return console.log(err);
 
-        console.log(docs);
-      });
+      //   console.log(docs);
+      // });
       return;
     } catch (e) {
       console.error(e);

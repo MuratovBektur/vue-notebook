@@ -47,11 +47,10 @@ var RecordModel = /** @class */ (function () {
     };
     RecordModel.prototype.removeById = function () {
         try {
-            Record.deleteMany({ title: "title2" }, function (err, docs) {
-                if (err)
-                    return console.log(err);
-                console.log(docs);
-            });
+            // Record.deleteMany({ title: "title2" }, function (err, docs) {
+            //   if (err) return console.log(err);
+            //   console.log(docs);
+            // });
             return;
         }
         catch (e) {
