@@ -1,8 +1,13 @@
+import axios from "axios";
 
 interface ComplexRecord {
-  id: number;
+  id: string;
   title: string;
   text: string;
+}
+
+interface recordArray {
+  [index: number]: { id: number; label: string; key: any };
 }
 
 export default {
@@ -10,58 +15,12 @@ export default {
   state: () => ({
     showForm: false,
     record: {},
-    recordList: [
-      {
-        id: 1,
-        title: "title1",
-        text:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus, provident cumque.",
-      },
-      {
-        id: 2,
-        title: "title2",
-        text:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus, provident cumque.",
-      },
-      {
-        id: 3,
-        title: "title3",
-        text:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil sapiente expedita, modi, eveniet perspiciatis vitae. Totam sit culpa eum, quod placeat iure, temporibus sed voluptate laudantium blanditiis error quidem! Illum voluptatum, placeat repellat.",
-      },
-      {
-        id: 4,
-        title: "title1",
-        text:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus, provident cumque.",
-      },
-      {
-        id: 5,
-        title: "title1",
-        text:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus, provident cumque.",
-      },
-      {
-        id: 6,
-        title: "title1",
-        text:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil sapiente expedita, modi, eveniet perspiciatis vitae. Totam sit culpa eum, quod placeat iure, temporibus sed voluptate laudantium blanditiis error quidem! Illum voluptatum, placeat repellat.",
-      },
-      {
-        id: 7,
-        title: "title1",
-        text:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil sapiente expedita, modi, eveniet perspiciatis vitae. Totam sit culpa eum, quod placeat iure, temporibus sed voluptate laudantium blanditiis error quidem! Illum voluptatum, placeat repellat.",
-      },
-      {
-        id: 8,
-        title: "title1",
-        text:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil sapiente expedita, modi, eveniet perspiciatis vitae. Totam sit culpa eum, quod placeat iure, temporibus sed voluptate laudantium blanditiis error quidem! Illum voluptatum, placeat repellat.",
-      },
-    ],
+    recordList: [],
   }),
   mutations: {
+    UPDATE_RECORDS(state: any, records) {
+      state.recordList = records;
+    },
     CHANGE_RECORD(state: any, record: ComplexRecord) {
       state.record = record;
       state.showForm = true;
@@ -74,10 +33,20 @@ export default {
       const idx: number = state.recordList.findIndex(
         (r: any) => r.id == record.id
       );
-      if (idx != -1)  state.recordList.splice(idx, 1, record);
-     
+      if (idx != -1) state.recordList.splice(idx, 1, record);
 
       state.showForm = false;
+    },
+    REMOVE_RECORD(state: any, id: string) {
+      const idx: number = state.recordList.findIndex((r: any) => r.id == id);
+      if (idx != -1) state.recordList.splice(idx, 1);
+      state.showForm = false;
+    },
+  },
+  actions: {
+    async fetchRecords({ commit }) {
+      const res = await axios("http://localhost:4000/api/record/all");
+      commit("UPDATE_RECORDS", res.data);
     },
   },
   getters: {

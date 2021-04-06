@@ -8,6 +8,7 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { mapActions } from "vuex";
 
 import vRecordList from "../components/v-record-list.vue";
 import vChangeRecordForm from "../components/v-change-record-form.vue";
@@ -23,6 +24,10 @@ export default Vue.extend({
   // },
   mounted() {
     console.log(this.$store);
+    this.fetchRecords();
+  },
+  methods: {
+    ...mapActions("record", ["fetchRecords"]),
   },
 
   watch: {

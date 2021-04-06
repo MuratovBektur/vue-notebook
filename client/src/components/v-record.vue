@@ -7,9 +7,21 @@
       class="mb-2 cursor-pointer"
     >
       <template v-slot:header>
-        <div class="d-flex justify-content-between" @click="changeRecord">
+        <div class="d-flex justify-content-between">
           {{ "#" + record.id }}
-          <img src="../assets/img/edit-icon.svg" alt="" />
+          <div>
+            <img
+              @click="changeRecord"
+              class="mr-2"
+              src="../assets/img/edit-icon.svg"
+              alt=""
+            />
+            <img
+              @click="removeRecord"
+              src="../assets/img/delete-icon.svg"
+              alt=""
+            />
+          </div>
         </div>
       </template>
       <b-card-text class="text-center">
@@ -47,7 +59,10 @@ export default Vue.extend({
     changeRecord() {
       this.CHANGE_RECORD(this.record);
     },
-    ...mapMutations("record", ["CHANGE_RECORD"]),
+    removeRecord() {
+      this.REMOVE_RECORD(this.record.id);
+    },
+    ...mapMutations("record", ["CHANGE_RECORD", "REMOVE_RECORD"]),
   },
 });
 </script>
@@ -55,9 +70,12 @@ export default Vue.extend({
 <style lang="scss">
 .v-card {
   // margin: 20px auto;
-  width: 256px;
-  h4 {
+  width: 300px;
+  & .card-title {
     text-align: center;
+  }
+  & .card-header {
+    padding: 8px 10px;
   }
 }
 </style>
