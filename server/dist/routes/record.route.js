@@ -10,5 +10,8 @@ recordRoute.get("/", function (req, res) {
     res.json("recordRoute");
 });
 recordRoute.get("/all", record_controller_1["default"].getAllRecord);
-recordRoute.get("/remove", record_controller_1["default"].removeById);
+recordRoute.get("/:id", record_controller_1["default"].getById);
+recordRoute.post("/add", record_controller_1["default"].addRecord);
+recordRoute.put("/edit", record_controller_1["default"].editRecord);
+recordRoute["delete"]("/remove/:id", record_controller_1["default"].removeById);
 exports["default"] = recordRoute;

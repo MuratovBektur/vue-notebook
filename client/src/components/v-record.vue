@@ -8,7 +8,7 @@
     >
       <template v-slot:header>
         <div class="d-flex justify-content-between">
-          {{ "#" + record.id }}
+          {{ record.id }}
           <div>
             <img
               @click="changeRecord"
@@ -17,7 +17,7 @@
               alt=""
             />
             <img
-              @click="removeRecord"
+              @click="removeRecord(record.id)"
               src="../assets/img/delete-icon.svg"
               alt=""
             />
@@ -34,7 +34,7 @@
 <script lang="ts">
 import Vue, { PropType } from "vue";
 
-import { mapMutations } from "vuex";
+import { mapMutations, mapActions } from "vuex";
 
 interface ComplexRecord {
   id: number;
@@ -47,9 +47,6 @@ export default Vue.extend({
     record: {
       type: Object as PropType<ComplexRecord>,
       required: true,
-      // validator (record: ComplexRecord) {
-      //   return !!message.title;
-      // }
     },
   },
   mounted() {
@@ -59,10 +56,8 @@ export default Vue.extend({
     changeRecord() {
       this.CHANGE_RECORD(this.record);
     },
-    removeRecord() {
-      this.REMOVE_RECORD(this.record.id);
-    },
-    ...mapMutations("record", ["CHANGE_RECORD", "REMOVE_RECORD"]),
+    ...mapMutations("record", ["CHANGE_RECORD"]),
+    ...mapActions("record", ["removeRecord"]),
   },
 });
 </script>

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <vHeader />
+    <vNotification />
     <b-container> <router-view /></b-container>
   </div>
 </template>
@@ -9,9 +10,11 @@
 import Vue from "vue";
 
 import vHeader from "./components/v-header.vue";
+import vNotification from "./components/v-notification.vue";
 export default Vue.extend({
   components: {
     vHeader,
+    vNotification,
   },
 });
 </script>

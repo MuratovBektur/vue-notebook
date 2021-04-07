@@ -11,6 +11,7 @@ var port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 4000;
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "*");
+    res.header("Access-Control-Allow-Methods", "*");
     next();
 });
 var start = function () {

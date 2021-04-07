@@ -49,38 +49,11 @@
 <script lang="ts">
 import Vue from "vue";
 
-import { mapState, mapMutations } from "vuex";
-
-// interface ComplexRecord {
-//   id: number;
-//   title: string;
-//   text: string;
-// }
+import { mapState, mapMutations, mapActions } from "vuex";
 
 export default Vue.extend({
-  // props: {
-  //   record: {
-  //     type: Object as PropType<ComplexRecord>,
-  //     required: true,
-  //     // validator (record: ComplexRecord) {
-  //     //   return !!message.title;
-  //     // }
-  //   },
-  // },
   mounted() {
     this.form = { ...this.record };
-  },
-  updated(): void {
-    // this.form = { ...this.record };
-    console.log("updated", this.form);
-    // if (this.record.id != this.form.id) {
-    //   this.form = {
-    //     id: -2,
-    //     title: "",
-    //     text: "",
-    //   };
-    //   this.form = this.record;
-    // }
   },
   data() {
     return {
@@ -94,13 +67,14 @@ export default Vue.extend({
   methods: {
     onSubmit(e: Event): void {
       e.preventDefault();
-      this.EDIT_RECORD(this.form);
+      this.editRecord(this.form);
     },
     onCancel(): void {
       console.log("oncancel");
       this.CANCEL_EDITING();
     },
     ...mapMutations("record", ["CANCEL_EDITING", "EDIT_RECORD"]),
+    ...mapActions("record", ["editRecord"]),
   },
   computed: {
     ...mapState("record", ["showForm", "record"]),

@@ -56,8 +56,93 @@ var RecordController = /** @class */ (function () {
             });
         });
     };
+    RecordController.prototype.getById = function (req, res) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            var id, data, _b, _c;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        id = req.params.id;
+                        _c = (_b = JSON).parse;
+                        return [4 /*yield*/, record_model_1["default"].getById(id)];
+                    case 1:
+                        data = _c.apply(_b, [_d.sent()]);
+                        if (!data.success) {
+                            if (((_a = data.reason) === null || _a === void 0 ? void 0 : _a.message) === "Can't found record with received id") {
+                                return [2 /*return*/, res.status(400).json(data)];
+                            }
+                            return [2 /*return*/, res.status(500).json(data)];
+                        }
+                        return [2 /*return*/, res.json(data)];
+                }
+            });
+        });
+    };
+    RecordController.prototype.addRecord = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var record, data, _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        record = req.body;
+                        _b = (_a = JSON).parse;
+                        return [4 /*yield*/, record_model_1["default"].addRecord(record)];
+                    case 1:
+                        data = _b.apply(_a, [_c.sent()]);
+                        if (!data.success) {
+                            return [2 /*return*/, res.status(500).json(data)];
+                        }
+                        return [2 /*return*/, res.status(201).json(data)];
+                }
+            });
+        });
+    };
+    RecordController.prototype.editRecord = function (req, res) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            var record, data, _b, _c;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        record = req.body;
+                        _c = (_b = JSON).parse;
+                        return [4 /*yield*/, record_model_1["default"].editRecord(record)];
+                    case 1:
+                        data = _c.apply(_b, [_d.sent()]);
+                        if (!data.success) {
+                            if (((_a = data.reason) === null || _a === void 0 ? void 0 : _a.message) === "Can't found record with received id") {
+                                return [2 /*return*/, res.status(400).json(data)];
+                            }
+                            return [2 /*return*/, res.status(500).json(data)];
+                        }
+                        return [2 /*return*/, res.json(data)];
+                }
+            });
+        });
+    };
     RecordController.prototype.removeById = function (req, res) {
-        return res.json(record_model_1["default"].removeById());
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            var id, data, _b, _c;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        id = req.params.id;
+                        _c = (_b = JSON).parse;
+                        return [4 /*yield*/, record_model_1["default"].removeById(id)];
+                    case 1:
+                        data = _c.apply(_b, [_d.sent()]);
+                        if (!data.success) {
+                            if (((_a = data.reason) === null || _a === void 0 ? void 0 : _a.message) === "Can't found record with received id") {
+                                return [2 /*return*/, res.status(400).json(data)];
+                            }
+                            return [2 /*return*/, res.status(500).json(data)];
+                        }
+                        return [2 /*return*/, res.json(data)];
+                }
+            });
+        });
     };
     return RecordController;
 }());
