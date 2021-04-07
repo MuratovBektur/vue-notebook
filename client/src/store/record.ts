@@ -11,6 +11,8 @@ interface IState {
   showForm: boolean;
   isLoaded: boolean;
   record: IRecord | null;
+  showNotification: boolean;
+  notification: { type: string; text: string };
   recordList: Array<IRecord>;
 }
 
@@ -21,6 +23,11 @@ export default {
     record: null,
     isLoaded: false,
     recordList: [],
+    showNotification: false,
+    notification: {
+      type: "",
+      text: "",
+    },
   }),
   mutations: {
     UPDATE_RECORDS(state: IState, records: Array<IRecord>): void {
@@ -66,12 +73,25 @@ export default {
         commit("UPDATE_RECORDS", [res.data.record]);
         state.isLoaded = true;
       } catch (e) {
-        dispatch("fetchRecords");
         console.error(e);
+        state.showNotification = true;
+        state.notification = {
+          type: "error",
+          text: "Запись не найдена",
+        };
+        const interval = setTimeout(() => {
+          state.showNotification = false;
+          state.notification = {
+            type: "",
+            text: "",
+          };
+          dispatch("fetchRecords");
+          clearInterval(interval);
+        }, 3000);
       }
     },
     async addRecord(
-      { dispatch }: { dispatch: Dispatch },
+      { dispatch, state }: { dispatch: Dispatch; state: IState },
       record: { title: string; text: string }
     ): Promise<boolean> {
       try {
@@ -80,7 +100,24 @@ export default {
           record
         );
         await dispatch("fetchRecords");
-        return res ? true : false;
+        if (res) {
+          state.showNotification = true;
+          state.notification = {
+            type: "success",
+            text: "Запись добавленна",
+          };
+          const interval = setTimeout(() => {
+            state.showNotification = false;
+            state.notification = {
+              type: "",
+              text: "",
+            };
+            dispatch("fetchRecords");
+            clearInterval(interval);
+          }, 3000);
+          return true;
+        }
+        return false;
       } catch (e) {
         console.error(e);
         return false;
